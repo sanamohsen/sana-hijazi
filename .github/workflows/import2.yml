@@ -1,0 +1,56 @@
+name: import-from-netlify-2
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download site files from Netlify and verify them
+        run: |
+          set -e
+          B=https://anam-hijazi.netlify.app
+          cat > expected.txt <<'EOF'
+          7e567438d4508eb6ed1cc890a341d6e89ffcd94a  abu-jafar-summary/abu-jafar-summary.pdf
+          3ec68d0d36731d876b32f8764fd9112482904c87  abu-jafar-summary/index.html
+          56c399d328a844ca20b7fed76d1ba23fe28bc9c1  abu-jafar/index.html
+          1e5d44a176df11fd2d7b333c9a8de1f37ee6a198  al-imran/index.html
+          6bd9ce3b7db2967eb1f7d134e971115eac7badbe  anam/index.html
+          eb194307f88e17af3fb75fbaa3cbf37d367f8650  bridge.html
+          7fdcdfdbadc76e3b4162e6402801e326d2ec0769  ibn-kathir-summary/ibn-kathir-summary.pdf
+          958b7af39849f2b99ddbf97e6f373252175f0837  ibn-kathir-summary/index.html
+          adc4511dd54fc39c0eb5d24ea437139e4dcae513  index.html
+          a61d28295cf68642961b75467d45e5643d995ec1  maida/index.html
+          e0efd79a49494ad7facdb149c36e40d83e68d3bf  minha/index.html
+          b9d9e02b84a7a29ff3a86397b5b4efe7d351173b  qalun-summary/index.html
+          7d66f9e259d84fc45f89b0ebb0efa08650403a10  qalun-summary/qalun-summary.pdf
+          1a0f497893ec042702b05c3ffb7e8050af6194de  quran-sciences/index.html
+          beae2ec295c79386bc42f97d4e5156eb56720990  shatibiyya/index.html
+          EOF
+          sed -i 's/^ *//' expected.txt
+          for p in $(awk '{print $2}' expected.txt); do
+            mkdir -p "$(dirname "$p")"
+            curl -fsSL "$B/$p" -o "$p"
+          done
+          python3 - <<'EOF'
+          import re
+          for line in open('expected.txt'):
+              p = line.split()[1]
+              if p.endswith('.html'):
+                  s = open(p, encoding='utf-8', newline='').read()
+                  s = re.sub(r'\r?\n<!-- This site is hosted on Netlify\.[\s\S]*?-->', '', s, count=1)
+                  open(p, 'w', encoding='utf-8', newline='').write(s)
+          EOF
+          sha1sum -c expected.txt
+          rm expected.txt
+          sed -i 's|<a href="/">→ الرئيسية</a>|<a href="../">→ الرئيسية</a>|' quran-sciences/index.html
+          grep -c 'href="../">→ الرئيسية' quran-sciences/index.html
+          touch .nojekyll
+      - name: Commit the site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "نقل الموقع من Netlify"
+          git push

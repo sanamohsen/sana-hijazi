@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#24432f">
+<meta property="og:title" content="متشابهات سورة المائدة">
+<meta property="og:description" content="دليل تفاعلي لضبط متشابهات سورة المائدة — إعداد أ. سناء محسن حجازي">
+<style>body{margin:0}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px)}</style>
+<title>متشابهات سورة المائدة</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap">
+<style>
+/* التخطيط: شريط رأس بلون المرعى، ثم محطات تُعرض واحدة واحدة كصفحات دفتر مراجعة للحافظ */
+:root{
+  --bg:#fafbf7; --surface:#ffffff; --ink:#1d2a21; --muted:#5b685e; --line:#d8ddcf;
+  --accent:#2c6248; --accent-ink:#ffffff; --gold:#9a7424; --other:#4b5a8c; --other-bg:#eef0f7;
+  --key:#7a4d0f; --key-bg:#f6ecd4; --blank:#e3e6dc; --ok:#2f7a4a; --ok-bg:#e3f1e6; --bad:#a3392f; --bad-bg:#f7e4e1;
+  --band:#24432f; --band-ink:#f3ead2; color-scheme:light;
+  --f-display:"Aref Ruqaa","Amiri",serif;
+  --f-ayah:"Amiri","Noto Naskh Arabic",serif;
+  --f-body:"Noto Naskh Arabic","Amiri",serif;
+  --f-ui:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+}
+:root[data-theme="dark"]{
+  --bg:#121713; --surface:#1a211c; --ink:#e4e9de; --muted:#9daa9f; --line:#2e3a31;
+  --accent:#7cc39e; --accent-ink:#0f1a13; --gold:#d8b45c; --other:#a7b3e3; --other-bg:#1e2333;
+  --key:#f0c97a; --key-bg:#3a2f17; --blank:#2a332c; --ok:#86d3a0; --ok-bg:#1d3325; --bad:#f09a8f; --bad-bg:#3a201d;
+  --band:#0d1a12; --band-ink:#ecdcae; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.9;direction:rtl}
+.wrap{max-width:860px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.band{background:var(--band);color:var(--band-ink)}
+header.band .wrap{padding-block:36px 28px;display:grid;gap:10px}
+.eyebrow{font-family:var(--f-ui);font-size:13px;letter-spacing:.04em;opacity:.8}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,7vw,54px);line-height:1.3;margin:0;text-wrap:balance}
+.lede{margin:0;max-width:60ch;opacity:.9}
+.byline{font-family:var(--f-ui);font-size:15px;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;margin-top:4px}
+.byline b{font-weight:600;color:var(--band-ink)}
+.byline span{opacity:.75}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--band)}
+.toolbar .wrap{display:flex;gap:10px;align-items:center;padding-block:10px}
+nav.stations{display:flex;gap:6px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:thin;padding-bottom:2px}
+nav.stations a{flex:none;font-family:var(--f-ui);font-size:14px;text-decoration:none;color:var(--muted);padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);white-space:nowrap}
+nav.stations a[aria-current="page"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+nav.stations a.done::after{content:" ✓";color:var(--ok)}
+nav.stations a[aria-current="page"].done::after{color:var(--accent-ink)}
+.recite{flex:none;font-family:var(--f-ui);font-size:14px;display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+.recite[aria-pressed="true"]{background:var(--key-bg);border-color:var(--key);color:var(--key)}
+.progress{height:4px;background:var(--line)}
+.progress i{display:block;height:100%;background:var(--gold);width:0;transition:width .4s}
+main .wrap{padding-block:28px 48px}
+.st-head{display:grid;gap:6px;margin-bottom:22px}
+.st-num{font-family:var(--f-ui);font-size:13px;color:var(--gold);font-weight:600;letter-spacing:.03em}
+h2{font-family:var(--f-display);font-size:clamp(26px,5vw,36px);margin:0;line-height:1.35;text-wrap:balance}
+.st-intro{margin:0;color:var(--muted);max-width:62ch}
+.hint{font-family:var(--f-ui);font-size:14px;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin:0}
+.cards{display:grid;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.card h3{margin:0;font-family:var(--f-ui);font-size:17px;font-weight:600;display:flex;gap:10px;align-items:baseline;line-height:1.6}
+.card h3 .n{flex:none;font-family:var(--f-display);color:var(--gold);font-size:22px;min-width:1.6em}
+.ayat{display:grid;gap:8px}
+.ayah{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:baseline}
+.ref{font-family:var(--f-ui);font-size:12.5px;font-weight:500;color:var(--accent);white-space:nowrap;border:1px solid currentColor;border-radius:999px;padding:0 9px;line-height:1.9}
+.ayah.other .ref{color:var(--other)}
+.ayah p{margin:0;font-family:var(--f-ayah);font-size:22px;line-height:2;min-width:0}
+.ayah.other p{color:var(--other)}
+.topic{font-family:var(--f-ui);font-size:13px;color:var(--muted);margin-top:-6px}
+.ayah p::before{content:"﴿";color:var(--gold);margin-inline-end:2px}
+.ayah p::after{content:"﴾";color:var(--gold);margin-inline-start:2px}
+.k{color:var(--key);background:var(--key-bg);border-radius:4px;padding:0 3px;font-weight:700}
+body.reciting .k:not(.shown){color:transparent;background:var(--blank);border-bottom:2px dashed var(--muted);cursor:pointer;user-select:none}
+body.reciting .k:not(.shown):focus-visible{outline:2px solid var(--accent)}
+.note{margin:0;font-size:16px;color:var(--ink)}
+.note .fix{display:block;margin-top:6px;font-family:var(--f-ui);font-size:13.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--f-ui);font-size:14px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 10px}
+.triad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.triad div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center;display:grid;gap:2px}
+.triad b{font-family:var(--f-display);font-size:28px;color:var(--gold);font-weight:700}
+.triad span{font-family:var(--f-ui);font-size:14px;font-weight:600}
+.triad small{font-family:var(--f-ayah);font-size:17px;color:var(--muted)}
+.quiz{margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:18px}
+.quiz-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.quiz-head h3{margin:0;font-family:var(--f-display);font-size:24px}
+.score{font-family:var(--f-ui);font-size:14px;color:var(--muted)}
+.q{display:grid;gap:8px}
+.q p{margin:0;font-weight:600}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.opts button{font-family:var(--f-body);font-size:16px;text-align:start;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 12px;cursor:pointer;line-height:1.7}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:focus-visible,.recite:focus-visible,.btn:focus-visible,nav.stations a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.opts button.right{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.opts button.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.opts button:disabled{cursor:default}
+.ex{margin:0;font-family:var(--f-ui);font-size:14px;color:var(--muted)}
+.foot-actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:24px}
+.btn{font-family:var(--f-ui);font-size:15px;font-weight:600;border-radius:8px;padding:10px 18px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--accent)}
+footer{border-top:1px solid var(--line)}
+footer .wrap{padding-block:20px 28px;font-family:var(--f-ui);font-size:13.5px;color:var(--muted);display:grid;gap:4px}
+@media (max-width:520px){
+  .ayah{grid-template-columns:1fr}
+  .ref{justify-self:start}
+  .ayah p{font-size:21px}
+  .triad b{font-size:22px}
+}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.menu-btn,.mbar{display:none}
+.sheet{border-top:1px solid var(--line);background:var(--bg);max-height:70vh;overflow-y:auto}
+.sheet .wrap{display:grid;gap:6px;padding-block:10px 14px}
+.sheet a{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:48px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);text-decoration:none;font-family:var(--f-ui);font-size:15px}
+.sheet a small{color:var(--muted);font-size:13px}
+.sheet a[aria-current="page"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.sheet a.done small::after{content:" ✓";color:var(--ok)}
+@media (max-width:640px){
+  header.band .wrap{padding-block:22px 18px;gap:6px}
+  h1{font-size:34px}
+  .lede{font-size:15.5px;line-height:1.8}
+  .byline{font-size:13.5px}
+  nav.stations,.toolbar .recite,.hint{display:none}
+  .toolbar .wrap{padding-block:8px}
+  .menu-btn{display:flex;flex:1;min-width:0;justify-content:space-between;align-items:center;gap:8px;min-height:44px;padding:0 14px;font-family:var(--f-ui);font-size:15px;font-weight:600;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;cursor:pointer}
+  .menu-btn span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .menu-btn[aria-expanded="true"]{border-color:var(--accent)}
+  main .wrap{padding-block:20px 28px}
+  .st-head{margin-bottom:16px}
+  .cards{gap:12px}
+  .card{padding:14px}
+  .card h3{font-size:16px}
+  .quiz{padding:14px;margin-top:24px}
+  .opts{grid-template-columns:1fr 1fr}
+  .opts button{min-height:50px;font-size:15.5px;padding:8px 10px}
+  .foot-actions a{display:none}
+  .foot-actions{margin-top:16px}
+  .mbar{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;position:fixed;inset:auto 0 0;z-index:6;background:var(--surface);border-top:1px solid var(--line);padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+  .mbar a,.mbar button{min-height:46px;display:flex;align-items:center;justify-content:center;font-family:var(--f-ui);font-size:15px;font-weight:600;border-radius:10px;text-decoration:none;cursor:pointer}
+  .mbar a{color:var(--accent);border:1px solid var(--line);background:var(--bg)}
+  .mbar a.next{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .mbar a[aria-disabled="true"]{visibility:hidden}
+  .mbar .recite{display:flex;padding:0 14px;border-radius:10px}
+  body{padding-bottom:calc(66px + env(safe-area-inset-bottom,0px))}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<style>.home{justify-self:start;font-family:var(--f-ui);font-size:14px;color:var(--band-ink);text-decoration:none;border:1px solid currentColor;border-radius:999px;padding:2px 12px;opacity:.85}.home:hover{opacity:1}</style>
+<header class="band">
+  <div class="wrap">
+    <a class="home" href="../">→ جميع السور</a>
+    <div class="eyebrow">دليل تفاعلي للحفّاظ والمتحفّظين</div>
+    <h1>متشابهات سورة المائدة</h1>
+    <p class="lede">النداءات، وآيات الحكم، والانفرادات، وصلة السورة بجاراتها، في ست محطات يعقب كلَّ محطة اختبارٌ قصير.</p>
+    <div class="byline"><span>إعداد</span><b>أ. سناء محسن حجازي</b><span>النص القرآني برواية حفص عن عاصم</span></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <nav class="stations" id="nav" aria-label="محطات الدليل"></nav>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="sheet"><span id="menuLabel">المحطات</span><span aria-hidden="true">▾</span></button>
+    <button class="recite" id="recite" aria-pressed="false" title="إخفاء مواضع التشابه للتسميع">وضع التسميع</button>
+  </div>
+  <div class="sheet" id="sheet" hidden><div class="wrap" id="sheetList"></div></div>
+  <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+</div>
+
+<main><div class="wrap" id="view"></div></main>
+
+<footer><div class="wrap">
+  <div>إعداد: أ. سناء محسن حجازي</div>
+  <div>أرقام الآيات وفق العدّ الكوفي. الكلمات الملوّنة هي موضع التشابه أو الانفراد؛ فعّلي «وضع التسميع» لإخفائها، ثم انقري على الفراغ لإظهارها.</div>
+</div></footer>
+
+<div class="mbar" id="mbar">
+  <a id="mPrev" href="#s1">السابقة</a>
+  <button class="recite" id="recite2" type="button" aria-pressed="false">وضع التسميع</button>
+  <a id="mNext" class="next" href="#s2">التالية</a>
+</div>
+
+<script>
+const AR = s => String(s).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+const K = s => s.replace(/\[\[(.+?)\]\]/g, '<span class="k" tabindex="0">$1</span>');
+
+const S = [
+{ id:'s1', short:'المحطة ١', title:'النداءات الست عشرة', intro:'تضم المائدة 16 نداءً للمؤمنين بـ«يَا أَيُّهَا الَّذِينَ آمَنُوا»، وهي أكثر سورة في عدد هذا النداء. رتّبتها هنا في أربع مجموعات، في كل مجموعة أربعة نداءات، ليسهل ضبط تسلسلها.', special:'nida',
+  groups:[
+   {t:'المجموعة الأولى: العقود والشعائر والطهارة والعدل', items:[
+     ['المائدة: 1','يَا أَيُّهَا الَّذِينَ آمَنُوا [[أَوْفُوا بِالْعُقُودِ]]','الوفاء بالعقود'],
+     ['المائدة: 2','يَا أَيُّهَا الَّذِينَ آمَنُوا [[لَا تُحِلُّوا شَعَائِرَ اللَّهِ]]','تعظيم شعائر الله'],
+     ['المائدة: 6','يَا أَيُّهَا الَّذِينَ آمَنُوا [[إِذَا قُمْتُمْ إِلَى الصَّلَاةِ]]','الوضوء والتيمم'],
+     ['المائدة: 8','يَا أَيُّهَا الَّذِينَ آمَنُوا [[كُونُوا قَوَّامِينَ لِلَّهِ شُهَدَاءَ بِالْقِسْطِ]]','القيام بالعدل']]},
+   {t:'المجموعة الثانية: النعمة والتقوى والولاء والردة', items:[
+     ['المائدة: 11','يَا أَيُّهَا الَّذِينَ آمَنُوا [[اذْكُرُوا نِعْمَتَ اللَّهِ عَلَيْكُمْ إِذْ هَمَّ قَوْمٌ]]','نعمة كفّ أيدي الأعداء'],
+     ['المائدة: 35','يَا أَيُّهَا الَّذِينَ آمَنُوا [[اتَّقُوا اللَّهَ وَابْتَغُوا إِلَيْهِ الْوَسِيلَةَ]]','التقوى وابتغاء الوسيلة'],
+     ['المائدة: 51','يَا أَيُّهَا الَّذِينَ آمَنُوا [[لَا تَتَّخِذُوا الْيَهُودَ وَالنَّصَارَىٰ أَوْلِيَاءَ]]','النهي عن موالاتهم'],
+     ['المائدة: 54','يَا أَيُّهَا الَّذِينَ آمَنُوا [[مَن يَرْتَدَّ مِنكُمْ عَن دِينِهِ]]','التحذير من الردة']]},
+   {t:'المجموعة الثالثة: المستهزئون والطيبات والخمر والصيد', items:[
+     ['المائدة: 57','يَا أَيُّهَا الَّذِينَ آمَنُوا [[لَا تَتَّخِذُوا الَّذِينَ اتَّخَذُوا دِينَكُمْ هُزُوًا وَلَعِبًا]]','النهي عن موالاة المستهزئين'],
+     ['المائدة: 87','يَا أَيُّهَا الَّذِينَ آمَنُوا [[لَا تُحَرِّمُوا طَيِّبَاتِ مَا أَحَلَّ اللَّهُ لَكُمْ]]','النهي عن تحريم الطيبات'],
+     ['المائدة: 90','يَا أَيُّهَا الَّذِينَ آمَنُوا [[إِنَّمَا الْخَمْرُ وَالْمَيْسِرُ وَالْأَنصَابُ وَالْأَزْلَامُ رِجْسٌ]]','تحريم الخمر والميسر'],
+     ['المائدة: 94','يَا أَيُّهَا الَّذِينَ آمَنُوا [[لَيَبْلُوَنَّكُمُ اللَّهُ بِشَيْءٍ مِّنَ الصَّيْدِ]]','الابتلاء بالصيد']]},
+   {t:'المجموعة الرابعة: جزاء الصيد والسؤال والنفس والوصية', items:[
+     ['المائدة: 95','يَا أَيُّهَا الَّذِينَ آمَنُوا [[لَا تَقْتُلُوا الصَّيْدَ وَأَنتُمْ حُرُمٌ]]','جزاء قتل الصيد للمحرم'],
+     ['المائدة: 101','يَا أَيُّهَا الَّذِينَ آمَنُوا [[لَا تَسْأَلُوا عَنْ أَشْيَاءَ إِن تُبْدَ لَكُمْ تَسُؤْكُمْ]]','النهي عن كثرة السؤال'],
+     ['المائدة: 105','يَا أَيُّهَا الَّذِينَ آمَنُوا [[عَلَيْكُمْ أَنفُسَكُمْ]] لَا يَضُرُّكُم مَّن ضَلَّ','إصلاح النفس'],
+     ['المائدة: 106','يَا أَيُّهَا الَّذِينَ آمَنُوا [[شَهَادَةُ بَيْنِكُمْ إِذَا حَضَرَ أَحَدَكُمُ الْمَوْتُ]]','شهادة الوصية']]}
+  ],
+  quiz:[
+  {q:'كم نداءً بـ«يَا أَيُّهَا الَّذِينَ آمَنُوا» في سورة المائدة؟', o:['ثمانية','أحد عشر','ستة عشر','عشرون'], c:2, e:'ستة عشر نداءً، وهي أكثر سورة في عدد هذا النداء.'},
+  {q:'بمَ افتُتح النداء الأول في السورة؟', o:['أَوْفُوا بِالْعُقُودِ','لَا تُحِلُّوا شَعَائِرَ اللَّهِ','اتَّقُوا اللَّهَ','كُونُوا قَوَّامِينَ'], c:0, e:'«يَا أَيُّهَا الَّذِينَ آمَنُوا أَوْفُوا بِالْعُقُودِ» في أول السورة.'},
+  {q:'نداء «إِذَا قُمْتُمْ إِلَى الصَّلَاةِ» موضوعه:', o:['الوصية','الطهارة','الصيد','العدل'], c:1, e:'أحكام الوضوء والتيمم.'},
+  {q:'بمَ جاء النداء الأخير في السورة؟', o:['عَلَيْكُمْ أَنفُسَكُمْ','لَا تَسْأَلُوا عَنْ أَشْيَاءَ','شَهَادَةُ بَيْنِكُمْ','لَا تَقْتُلُوا الصَّيْدَ'], c:2, e:'«شَهَادَةُ بَيْنِكُمْ إِذَا حَضَرَ أَحَدَكُمُ الْمَوْتُ» آخر النداءات.'}
+  ]},
+
+{ id:'s2', short:'المحطة ٢', title:'آيات الحكم بما أنزل الله', intro:'ثلاث آيات متقاربة تشترك في «وَمَن لَّمْ يَحْكُم بِمَا أَنزَلَ اللَّهُ فَأُولَٰئِكَ هُمُ»، وتختلف في الخاتمة.',
+  cards:[
+  {t:'آية التوراة', a:[['المائدة: 44','إِنَّا أَنزَلْنَا التَّوْرَاةَ فِيهَا هُدًى وَنُورٌ ... وَمَن لَّمْ يَحْكُم بِمَا أَنزَلَ اللَّهُ فَأُولَٰئِكَ هُمُ [[الْكَافِرُونَ]]']], n:'لأنهم جحدوا ما في كتابهم، فناسب الوصف بالكفر.'},
+  {t:'آية القصاص', a:[['المائدة: 45','وَكَتَبْنَا عَلَيْهِمْ فِيهَا أَنَّ النَّفْسَ بِالنَّفْسِ ... وَمَن لَّمْ يَحْكُم بِمَا أَنزَلَ اللَّهُ فَأُولَٰئِكَ هُمُ [[الظَّالِمُونَ]]']], n:'لأن ترك القصاص تعدٍّ على الأنفس والحقوق، وهو عين الظلم.'},
+  {t:'آية الإنجيل', a:[['المائدة: 47','وَلْيَحْكُمْ أَهْلُ الْإِنجِيلِ بِمَا أَنزَلَ اللَّهُ فِيهِ ۚ وَمَن لَّمْ يَحْكُم بِمَا أَنزَلَ اللَّهُ فَأُولَٰئِكَ هُمُ [[الْفَاسِقُونَ]]']], n:'لأن الفسق خروج عن الطاعة، وقد خرجوا عن أحكام كتابهم.'},
+  {t:'ضابط الحفظ', a:[], n:'التوراة ← كافرون، والقصاص ← ظالمون، والإنجيل ← فاسقون. وترتيبها في المصحف: الكفر ثم الظلم ثم الفسق.'}
+  ],
+  quiz:[
+  {q:'بمَ خُتمت آية التوراة «إِنَّا أَنزَلْنَا التَّوْرَاةَ فِيهَا هُدًى وَنُورٌ»؟', o:['الظَّالِمُونَ','الْكَافِرُونَ','الْفَاسِقُونَ','الْخَاسِرُونَ'], c:1, e:'«فَأُولَٰئِكَ هُمُ الْكَافِرُونَ».'},
+  {q:'بمَ خُتمت آية القصاص «أَنَّ النَّفْسَ بِالنَّفْسِ»؟', o:['الْكَافِرُونَ','الْفَاسِقُونَ','الظَّالِمُونَ','الْمُعْتَدُونَ'], c:2, e:'«فَأُولَٰئِكَ هُمُ الظَّالِمُونَ».'},
+  {q:'بمَ خُتمت آية «وَلْيَحْكُمْ أَهْلُ الْإِنجِيلِ»؟', o:['الْفَاسِقُونَ','الظَّالِمُونَ','الْكَافِرُونَ','الْمُفْسِدُونَ'], c:0, e:'«فَأُولَٰئِكَ هُمُ الْفَاسِقُونَ».'}
+  ]},
+
+{ id:'s3', short:'المحطة ٣', title:'الانفرادات (١)', intro:'تراكيب انفردت بها السورة، أو جاءت فيها بزيادة أو تقديم يميّزها عن نظائرها.',
+  cards:[
+  {t:'«وَلَا يَجْرِمَنَّكُمْ شَنَآنُ قَوْمٍ»', a:[['المائدة: 2','وَلَا يَجْرِمَنَّكُمْ شَنَآنُ قَوْمٍ [[أَن صَدُّوكُمْ عَنِ الْمَسْجِدِ الْحَرَامِ]]'],['المائدة: 8','وَلَا يَجْرِمَنَّكُمْ شَنَآنُ قَوْمٍ [[عَلَىٰ أَلَّا تَعْدِلُوا]] ۚ اعْدِلُوا هُوَ أَقْرَبُ لِلتَّقْوَىٰ']], n:'لم يرد إلا في هذين الموضعين من المائدة. والشنآن: شدة البغض.'},
+  {t:'زيادة «وَاحْذَرُوا»', a:[['المائدة: 92','وَأَطِيعُوا اللَّهَ وَأَطِيعُوا الرَّسُولَ [[وَاحْذَرُوا]]'],['التغابن: 12','وَأَطِيعُوا اللَّهَ وَأَطِيعُوا الرَّسُولَ ۚ فَإِن تَوَلَّيْتُمْ']], n:'انفردت المائدة بزيادة الأمر بالحذر بعد الطاعة.'},
+  {t:'«هُدًى وَنُورٌ» بتقديم الهدى', a:[['المائدة: 44','إِنَّا أَنزَلْنَا التَّوْرَاةَ فِيهَا [[هُدًى وَنُورٌ]]'],['المائدة: 46','وَآتَيْنَاهُ الْإِنجِيلَ فِيهِ [[هُدًى وَنُورٌ]]'],['الأنعام: 91','الْكِتَابَ الَّذِي جَاءَ بِهِ مُوسَىٰ [[نُورًا وَهُدًى]] لِّلنَّاسِ']], n:'في المائدة تقديم الهدى في التوراة والإنجيل، وفي الأنعام تقديم النور.'},
+  {t:'«فَتَكُونَ مِنْ أَصْحَابِ النَّارِ»', a:[['المائدة: 29','إِنِّي أُرِيدُ أَن تَبُوءَ بِإِثْمِي وَإِثْمِكَ [[فَتَكُونَ مِنْ أَصْحَابِ النَّارِ]] ۚ وَذَٰلِكَ جَزَاءُ الظَّالِمِينَ'],['الأنعام: 52','فَتَطْرُدَهُمْ [[فَتَكُونَ مِنَ الظَّالِمِينَ]]'],['الشعراء: 213','[[فَتَكُونَ مِنَ الْمُعَذَّبِينَ]]']], n:'على لسان ابن آدم المقتول، انفردت بها المائدة.'},
+  {t:'«هُزُوًا وَلَعِبًا»', a:[['المائدة: 57','الَّذِينَ اتَّخَذُوا دِينَكُمْ [[هُزُوًا وَلَعِبًا]]'],['المائدة: 58','وَإِذَا نَادَيْتُمْ إِلَى الصَّلَاةِ اتَّخَذُوهَا [[هُزُوًا وَلَعِبًا]]'],['الأنعام: 70','وَذَرِ الَّذِينَ اتَّخَذُوا دِينَهُمْ [[لَعِبًا وَلَهْوًا]]'],['الأعراف: 51','الَّذِينَ اتَّخَذُوا دِينَهُمْ [[لَهْوًا وَلَعِبًا]]']], n:'في المائدة «هُزُوًا وَلَعِبًا» في موضعين متتاليين، وفي الأنعام والأعراف جاء اللهو مع اللعب.'},
+  {t:'زيادة «وَمَا فِيهِنَّ» في الخاتمة', a:[['المائدة: 120','لِلَّهِ مُلْكُ السَّمَاوَاتِ وَالْأَرْضِ [[وَمَا فِيهِنَّ]] ۚ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ'],['آل عمران: 189','وَلِلَّهِ مُلْكُ السَّمَاوَاتِ وَالْأَرْضِ ۗ وَاللَّهُ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ']], n:'خُتمت السورة بزيادة «وَمَا فِيهِنَّ» تأكيدًا لشمول الملك.'},
+  {t:'حرمة الجنة على المشرك', a:[['المائدة: 72','إِنَّهُ مَن يُشْرِكْ بِاللَّهِ فَقَدْ [[حَرَّمَ اللَّهُ عَلَيْهِ الْجَنَّةَ]] وَمَأْوَاهُ النَّارُ ۖ وَمَا لِلظَّالِمِينَ مِنْ أَنصَارٍ']], n:'على لسان عيسى عليه السلام.'},
+  {t:'«لَسْتُمْ عَلَىٰ شَيْءٍ»', a:[['المائدة: 68','قُلْ يَا أَهْلَ الْكِتَابِ [[لَسْتُمْ عَلَىٰ شَيْءٍ]] حَتَّىٰ تُقِيمُوا التَّوْرَاةَ وَالْإِنجِيلَ']], n:'خطاب لأهل الكتاب انفردت به السورة.'}
+  ],
+  quiz:[
+  {q:'«وَلَا يَجْرِمَنَّكُمْ شَنَآنُ قَوْمٍ ...» ما الذي يليها في الموضع الأول؟', o:['عَلَىٰ أَلَّا تَعْدِلُوا','أَن صَدُّوكُمْ عَنِ الْمَسْجِدِ الْحَرَامِ','أَن يُخْرِجُوكُمْ','بِمَا كَانُوا يَعْتَدُونَ'], c:1, e:'الأول: «أَن صَدُّوكُمْ عَنِ الْمَسْجِدِ الْحَرَامِ»، والثاني: «عَلَىٰ أَلَّا تَعْدِلُوا».'},
+  {q:'«وَأَطِيعُوا اللَّهَ وَأَطِيعُوا الرَّسُولَ ___» في المائدة:', o:['فَإِن تَوَلَّيْتُمْ','وَاحْذَرُوا','وَلَا تَنَازَعُوا','لَعَلَّكُمْ تُرْحَمُونَ'], c:1, e:'انفردت المائدة بزيادة «وَاحْذَرُوا».'},
+  {q:'كيف جاء وصف التوراة في المائدة؟', o:['نُورًا وَهُدًى','هُدًى وَنُورٌ','هُدًى وَرَحْمَةٌ','ضِيَاءً وَذِكْرًا'], c:1, e:'«فِيهَا هُدًى وَنُورٌ» بتقديم الهدى.'},
+  {q:'«اتَّخَذُوا دِينَكُمْ ___» في المائدة:', o:['لَعِبًا وَلَهْوًا','لَهْوًا وَلَعِبًا','هُزُوًا وَلَعِبًا','هُزُوًا وَلَهْوًا'], c:2, e:'«هُزُوًا وَلَعِبًا» في المائدة، و«لَعِبًا وَلَهْوًا» في الأنعام، و«لَهْوًا وَلَعِبًا» في الأعراف.'},
+  {q:'بمَ خُتمت سورة المائدة؟', o:['وَاللَّهُ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ','لِلَّهِ مُلْكُ السَّمَاوَاتِ وَالْأَرْضِ وَمَا فِيهِنَّ ۚ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ','وَاللَّهُ بِكُلِّ شَيْءٍ عَلِيمٌ','يَخْلُقُ مَا يَشَاءُ'], c:1, e:'بزيادة «وَمَا فِيهِنَّ».'}
+  ]},
+
+{ id:'s4', short:'المحطة ٤', title:'الانفرادات (٢)', intro:'تتمة الانفرادات: صفات القوم البدلاء، والعصمة، والبلاغ، ومشاهد آخر السورة.',
+  cards:[
+  {t:'صفات القوم البدلاء', a:[['المائدة: 54','فَسَوْفَ يَأْتِي اللَّهُ بِقَوْمٍ [[يُحِبُّهُمْ وَيُحِبُّونَهُ أَذِلَّةٍ عَلَى الْمُؤْمِنِينَ أَعِزَّةٍ عَلَى الْكَافِرِينَ]] يُجَاهِدُونَ فِي سَبِيلِ اللَّهِ وَلَا يَخَافُونَ لَوْمَةَ لَائِمٍ']], n:'خمس صفات: المحبة المتبادلة، والذلة على المؤمنين، والعزة على الكافرين، والجهاد، وعدم خوف اللوم. والضابط: «أَذِلَّةٍ» مع المؤمنين، و«أَعِزَّةٍ» مع الكافرين.'},
+  {t:'«فَأَثَابَهُمُ اللَّهُ بِمَا قَالُوا»', a:[['المائدة: 85','[[فَأَثَابَهُمُ اللَّهُ بِمَا قَالُوا]] جَنَّاتٍ تَجْرِي مِن تَحْتِهَا الْأَنْهَارُ خَالِدِينَ فِيهَا']], n:'ثواب صريح على القول، في الذين فاضت أعينهم من الدمع.'},
+  {t:'العصمة من الناس', a:[['المائدة: 67','يَا أَيُّهَا الرَّسُولُ بَلِّغْ مَا أُنزِلَ إِلَيْكَ مِن رَّبِّكَ ... [[وَاللَّهُ يَعْصِمُكَ مِنَ النَّاسِ]]']], n:'وعد مباشر للنبي ﷺ انفردت به آية التبليغ.'},
+  {t:'«مَّا عَلَى الرَّسُولِ إِلَّا الْبَلَاغُ»', a:[['المائدة: 99','مَّا عَلَى الرَّسُولِ إِلَّا الْبَلَاغُ ۗ [[وَاللَّهُ يَعْلَمُ مَا تُبْدُونَ وَمَا تَكْتُمُونَ]]'],['المائدة: 92','فَاعْلَمُوا أَنَّمَا عَلَىٰ رَسُولِنَا الْبَلَاغُ [[الْمُبِينُ]]'],['النور: 54','وَمَا عَلَى الرَّسُولِ إِلَّا الْبَلَاغُ [[الْمُبِينُ]]']], n:'الموضع 99 بلا «الْمُبِينُ»، وبعده «وَاللَّهُ يَعْلَمُ مَا تُبْدُونَ وَمَا تَكْتُمُونَ». وفي المائدة نفسها موضع آخر بـ«عَلَىٰ رَسُولِنَا الْبَلَاغُ الْمُبِينُ».'},
+  {t:'الخبيث والطيب', a:[['المائدة: 100','قُل لَّا يَسْتَوِي الْخَبِيثُ وَالطَّيِّبُ وَلَوْ أَعْجَبَكَ كَثْرَةُ الْخَبِيثِ ۚ فَاتَّقُوا اللَّهَ [[يَا أُولِي الْأَلْبَابِ]] لَعَلَّكُمْ تُفْلِحُونَ']], n:'ميزان انفردت به السورة.'},
+  {t:'«يَنفَعُ الصَّادِقِينَ صِدْقُهُمْ»', a:[['المائدة: 119','قَالَ اللَّهُ هَٰذَا يَوْمُ [[يَنفَعُ الصَّادِقِينَ صِدْقُهُمْ]] ۚ لَهُمْ جَنَّاتٌ تَجْرِي مِن تَحْتِهَا الْأَنْهَارُ خَالِدِينَ فِيهَا أَبَدًا']], n:'من مشاهد يوم القيامة في آخر السورة.'},
+  {t:'دعاء المائدة', a:[['المائدة: 114','اللَّهُمَّ رَبَّنَا أَنزِلْ عَلَيْنَا مَائِدَةً مِّنَ السَّمَاءِ تَكُونُ لَنَا عِيدًا لِّأَوَّلِنَا وَآخِرِنَا وَآيَةً مِّنكَ ۖ [[وَارْزُقْنَا وَأَنتَ خَيْرُ الرَّازِقِينَ]]']], n:'على لسان عيسى ابن مريم عليه السلام، ومنه اسم السورة.'}
+  ],
+  quiz:[
+  {q:'«فَسَوْفَ يَأْتِي اللَّهُ بِقَوْمٍ يُحِبُّهُمْ وَيُحِبُّونَهُ أَذِلَّةٍ عَلَى ___»', o:['الْكَافِرِينَ','الْمُؤْمِنِينَ','الْمُنَافِقِينَ','النَّاسِ'], c:1, e:'«أَذِلَّةٍ عَلَى الْمُؤْمِنِينَ أَعِزَّةٍ عَلَى الْكَافِرِينَ».'},
+  {q:'«وَاللَّهُ يَعْصِمُكَ ___»', o:['مِنَ الشَّيْطَانِ','مِنَ النَّاسِ','مِنْ كَيْدِهِمْ','مِنْ عَدُوِّكَ'], c:1, e:'«وَاللَّهُ يَعْصِمُكَ مِنَ النَّاسِ».'},
+  {q:'ما الذي يلي «مَّا عَلَى الرَّسُولِ إِلَّا الْبَلَاغُ» في المائدة؟', o:['الْمُبِينُ','وَاللَّهُ يَعْلَمُ مَا تُبْدُونَ وَمَا تَكْتُمُونَ','وَعَلَيْنَا الْحِسَابُ','وَاللَّهُ بَصِيرٌ بِالْعِبَادِ'], c:1, e:'بلا «الْمُبِينُ»، وبعده «وَاللَّهُ يَعْلَمُ مَا تُبْدُونَ وَمَا تَكْتُمُونَ».'},
+  {q:'«هَٰذَا يَوْمُ يَنفَعُ ___ صِدْقُهُمْ»', o:['الْمُؤْمِنِينَ','الصَّادِقِينَ','الْمُتَّقِينَ','الصَّابِرِينَ'], c:1, e:'«يَنفَعُ الصَّادِقِينَ صِدْقُهُمْ».'},
+  {q:'بمَ خُتم دعاء عيسى عليه السلام بالمائدة؟', o:['وَأَنتَ خَيْرُ الرَّازِقِينَ','إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ','وَأَنتَ خَيْرُ الْمُنزِلِينَ','إِنَّكَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ'], c:0, e:'«وَارْزُقْنَا وَأَنتَ خَيْرُ الرَّازِقِينَ».'}
+  ]},
+
+{ id:'s5', short:'المحطة ٥', title:'الربط بالسور المجاورة', intro:'صلة المائدة بما قبلها وما بعدها، ونظائرها في سور أخرى.',
+  cards:[
+  {t:'من خاتمة النساء إلى أول الأنعام', a:[['النساء: 176','وَاللَّهُ بِكُلِّ شَيْءٍ عَلِيمٌ'],['المائدة: 1','يَا أَيُّهَا الَّذِينَ آمَنُوا أَوْفُوا بِالْعُقُودِ'],['المائدة: 120','لِلَّهِ مُلْكُ السَّمَاوَاتِ وَالْأَرْضِ وَمَا فِيهِنَّ'],['الأنعام: 1','الْحَمْدُ لِلَّهِ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ']], n:'خُتمت النساء بسعة علم الله، فبدأت المائدة بالأمر بالوفاء بالعقود، وخُتمت بملك السماوات والأرض، فاتصلت بافتتاح الأنعام بخلقهما.'},
+  {t:'المحرمات من الأطعمة', a:[['البقرة: 173','إِنَّمَا حَرَّمَ عَلَيْكُمُ الْمَيْتَةَ وَالدَّمَ وَلَحْمَ الْخِنزِيرِ وَمَا أُهِلَّ بِهِ لِغَيْرِ اللَّهِ'],['المائدة: 3','حُرِّمَتْ عَلَيْكُمُ الْمَيْتَةُ وَالدَّمُ وَلَحْمُ الْخِنزِيرِ وَمَا أُهِلَّ لِغَيْرِ اللَّهِ بِهِ [[وَالْمُنْخَنِقَةُ وَالْمَوْقُوذَةُ وَالْمُتَرَدِّيَةُ وَالنَّطِيحَةُ وَمَا أَكَلَ السَّبُعُ]]']], n:'فصّلت المائدة ما أجملته البقرة، فزادت المنخنقة والموقوذة والمتردية والنطيحة وما أكل السبع وما ذُبح على النصب. ولاحظي تقديم «بِهِ» في البقرة وتأخيرها في المائدة.'},
+  {t:'قصة الأرض المقدسة', a:[['المائدة: 24','فَاذْهَبْ أَنتَ وَرَبُّكَ فَقَاتِلَا [[إِنَّا هَاهُنَا قَاعِدُونَ]]'],['المائدة: 26','فَإِنَّهَا مُحَرَّمَةٌ عَلَيْهِمْ ۛ [[أَرْبَعِينَ سَنَةً]] ۛ يَتِيهُونَ فِي الْأَرْضِ']], n:'نكوص بني إسرائيل عن دخول الأرض المقدسة، وعقوبتهم بالتيه.'}
+  ],
+  quiz:[
+  {q:'بمَ خُتمت سورة النساء التي قبل المائدة؟', o:['وَاللَّهُ بِكُلِّ شَيْءٍ عَلِيمٌ','وَاللَّهُ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ','إِنَّ اللَّهَ كَانَ عَلِيمًا حَكِيمًا','وَاللَّهُ غَفُورٌ رَّحِيمٌ'], c:0, e:'«وَاللَّهُ بِكُلِّ شَيْءٍ عَلِيمٌ».'},
+  {q:'أي السورتين فصّلت المحرمات فذكرت المنخنقة والموقوذة؟', o:['البقرة','المائدة','الأنعام','النحل'], c:1, e:'المائدة.'},
+  {q:'«فَاذْهَبْ أَنتَ وَرَبُّكَ فَقَاتِلَا إِنَّا ___»', o:['هَاهُنَا قَاعِدُونَ','مَعَكُمْ مُّسْتَمِعُونَ','لَن نَّدْخُلَهَا أَبَدًا','إِلَىٰ رَبِّنَا رَاغِبُونَ'], c:0, e:'«إِنَّا هَاهُنَا قَاعِدُونَ».'},
+  {q:'كم كانت مدة التيه؟', o:['أربعين ليلة','أربعين سنة','سبع سنين','عشر سنين'], c:1, e:'«أَرْبَعِينَ سَنَةً يَتِيهُونَ فِي الْأَرْضِ».'}
+  ]},
+
+{ id:'s6', short:'الاختبار الشامل', title:'الاختبار الشامل', intro:'عشرة أسئلة مختارة عشوائيًّا من جميع المحطات. أعيدي الاختبار لأسئلة جديدة.', special:'final', cards:[] }
+];
+
+const view = document.getElementById('view');
+const nav = document.getElementById('nav');
+const bar = document.getElementById('bar');
+let done = new Set();
+try { done = new Set(JSON.parse(localStorage.getItem('anam-done') || '[]')); } catch(e) {}
+const saveDone = () => { try { localStorage.setItem('anam-done', JSON.stringify([...done])); } catch(e) {} };
+
+function renderNav(cur){
+  nav.innerHTML = S.map(s => `<a href="#${s.id}" class="${done.has(s.id)?'done':''}" ${s.id===cur?'aria-current="page"':''}>${s.short}</a>`).join('');
+  bar.style.width = (done.size / S.length * 100) + '%';
+  const a = nav.querySelector('[aria-current]'); if (a && nav.offsetParent) a.scrollIntoView({block:'nearest', inline:'center'});
+  const i = Math.max(0, S.findIndex(s=>s.id===cur)), s = S[i];
+  document.getElementById('menuLabel').textContent = s.short === s.title ? s.title : s.short + ' — ' + s.title;
+  document.getElementById('sheetList').innerHTML = S.map(x => `<a href="#${x.id}" class="${done.has(x.id)?'done':''}" ${x.id===cur?'aria-current="page"':''}><span>${x.title}</span><small>${x.short}</small></a>`).join('');
+  const p = document.getElementById('mPrev'), n = document.getElementById('mNext');
+  if (i>0){ p.href = '#'+S[i-1].id; p.removeAttribute('aria-disabled'); } else { p.setAttribute('aria-disabled','true'); p.removeAttribute('href'); }
+  if (i<S.length-1){ n.href = '#'+S[i+1].id; n.dataset.finish = s.id; n.removeAttribute('aria-disabled'); n.textContent = i===S.length-2 ? 'الاختبار الشامل' : 'التالية'; }
+  else { n.setAttribute('aria-disabled','true'); n.removeAttribute('href'); }
+}
+function ayahHTML([ref, text]){
+  const other = !ref.startsWith('الأنعام');
+  return `<div class="ayah${other?' other':''}"><span class="ref">${AR(ref)}</span><p>${K(text)}</p></div>`;
+}
+function cardHTML(c, i){
+  return `<article class="card"><h3><span class="n">${AR(i+1)}</span>${c.t}</h3>
+    ${c.a.length?`<div class="ayat">${c.a.map(ayahHTML).join('')}</div>`:''}
+    <p class="note">${AR(c.n)}${c.fix?`<span class="fix">${AR(c.fix)}</span>`:''}</p></article>`;
+}
+function quizHTML(qs, title){
+  return `<section class="quiz" data-total="${qs.length}"><div class="quiz-head"><h3>${title}</h3><span class="score">${AR(0)} من ${AR(qs.length)}</span></div>
+    ${qs.map((q,qi)=>`<div class="q" data-c="${q.c}"><p>${AR(qi+1)}. ${AR(q.q)}</p>
+      <div class="opts">${q.o.map((o,oi)=>`<button type="button" data-i="${oi}">${AR(o)}</button>`).join('')}</div>
+      <p class="ex" hidden>${AR(q.e)}</p></div>`).join('')}</section>`;
+}
+function shuffle(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function render(){
+  let id = (location.hash||'').slice(1);
+  const idx = Math.max(0, S.findIndex(s=>s.id===id));
+  const s = S[idx];
+  renderNav(s.id);
+  let body = '';
+  if (s.special === 'qul'){
+    body += `<div class="triad"><div><b>${AR(14)}</b><span>توحيد الولاية</span><small>أَتَّخِذُ وَلِيًّا</small></div><div><b>${AR(114)}</b><span>توحيد الحكم</span><small>أَبْتَغِي حَكَمًا</small></div><div><b>${AR(164)}</b><span>توحيد الربوبية</span><small>أَبْغِي رَبًّا</small></div></div><div style="height:14px"></div>`;
+  }
+  if (s.special === 'nida'){
+    body += `<div class="cards">${s.groups.map((g,gi)=>`<article class="card"><h3><span class="n">${AR(gi+1)}</span>${g.t}</h3>
+      <div class="ayat">${g.items.map(([r,t,topic],ii)=>`<div class="ayah"><span class="ref">${AR(r)}</span><p>${K(t)}</p><span></span><small class="topic">${AR(gi*4+ii+1)}. ${topic}</small></div>`).join('')}</div></article>`).join('')}</div>`;
+  } else if (s.special === 'prophets'){
+    body += `<div class="cards">${s.groups.map((g,i)=>`<article class="card"><h3><span class="n">${AR(i+1)}</span><span>${AR(g.r.replace('الأنعام: ','الآية '))}</span><span style="color:var(--muted);font-weight:400">${g.names.length>2?AR(g.names.length)+' أنبياء':'نبي واحد'}</span></h3>
+      <div class="chips">${g.names.map(n=>`<span class="chip">${n}</span>`).join('')}</div>
+      <div class="ayah"><span class="ref">الخاتمة</span><p>${K(g.end)}</p></div>
+      <p class="note">${g.n}</p></article>`).join('')}</div>`;
+  } else if (s.cards.length){
+    body += `<div class="cards">${s.cards.map(cardHTML).join('')}</div>`;
+  }
+  let qs = s.special==='final' ? shuffle(S.flatMap(x=>x.quiz||[])).slice(0,10) : s.quiz;
+  const isLast = idx === S.length-1;
+  view.innerHTML = `<div class="st-head"><div class="st-num">${s.special==='final'?'الختام':'المحطة '+AR(idx+1)+' من '+AR(S.length-1)}</div><h2>${s.title}</h2><p class="st-intro">${AR(s.intro)}</p></div>
+    ${s.special!=='final'?'<p class="hint">جرّبي «وضع التسميع» من الشريط العلوي: تختفي الكلمات الفارقة، فاستحضريها ثم انقري لتظهر.</p><div style="height:16px"></div>':''}
+    ${body}
+    ${quizHTML(qs, s.special==='final'?'أسئلة الاختبار':'اختبري نفسك')}
+    <div class="foot-actions">
+      ${idx>0?`<a class="btn ghost" href="#${S[idx-1].id}" style="text-decoration:none">المحطة السابقة</a>`:'<span></span>'}
+      ${s.special==='final'?`<button class="btn" type="button" id="again">اختبار جديد</button>`:`<a class="btn" href="#${S[idx+1].id}" style="text-decoration:none" data-finish="${s.id}">${isLast?'':'أتممتُ المحطة، التالية'}</a>`}
+    </div>`;
+  window.scrollTo({top:0});
+}
+
+view.addEventListener('click', e => {
+  const b = e.target.closest('.opts button');
+  if (b){
+    const q = b.closest('.q'); const c = +q.dataset.c;
+    q.querySelectorAll('button').forEach(x=>{ x.disabled = true; if (+x.dataset.i===c) x.classList.add('right'); });
+    if (+b.dataset.i !== c) b.classList.add('wrong');
+    q.querySelector('.ex').hidden = false;
+    const quiz = q.closest('.quiz');
+    const right = quiz.querySelectorAll('.opts button.right:not(.wrong)').length - quiz.querySelectorAll('.opts button.wrong').length;
+    quiz.querySelector('.score').textContent = AR(right) + ' من ' + AR(quiz.dataset.total);
+    if (quiz.querySelectorAll('.q').length === quiz.querySelectorAll('.ex:not([hidden])').length){
+      const id = (location.hash||'#s1').slice(1) || 's1'; done.add(id); saveDone(); renderNav(id);
+    }
+    return;
+  }
+  const f = e.target.closest('[data-finish]'); if (f){ done.add(f.dataset.finish); saveDone(); }
+  if (e.target.id === 'again') render();
+  const k = e.target.closest('.k'); if (k && document.body.classList.contains('reciting')) k.classList.add('shown');
+});
+view.addEventListener('keydown', e => { const k = e.target.closest('.k'); if (k && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); k.classList.add('shown'); } });
+
+const recs = [document.getElementById('recite'), document.getElementById('recite2')];
+recs.forEach(r => r.addEventListener('click', () => {
+  const on = document.body.classList.toggle('reciting');
+  recs.forEach(x => x.setAttribute('aria-pressed', on));
+  document.querySelectorAll('.k.shown').forEach(k=>k.classList.remove('shown'));
+}));
+const menuBtn = document.getElementById('menuBtn'), sheet = document.getElementById('sheet');
+const closeSheet = () => { sheet.hidden = true; menuBtn.setAttribute('aria-expanded','false'); };
+menuBtn.addEventListener('click', () => { sheet.hidden = !sheet.hidden; menuBtn.setAttribute('aria-expanded', String(!sheet.hidden)); });
+document.getElementById('mNext').addEventListener('click', e => { const f = e.currentTarget.dataset.finish; if (f){ done.add(f); saveDone(); } });
+window.addEventListener('hashchange', () => { closeSheet(); render(); });
+render();
+</script>
+
+</body>
+</html>

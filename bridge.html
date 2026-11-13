@@ -1,0 +1,4 @@
+<!doctype html><meta charset="utf-8"><title>bridge</title><script>
+addEventListener('message',async e=>{if(!e.data||!e.data.paths)return;const r={};for(const p of e.data.paths){r[p]=await fetch('/'+p,{cache:'no-store'}).then(x=>x.arrayBuffer())}e.source.postMessage({files:r},'*',Object.values(r))});
+if(parent!==window)parent.postMessage('bridge-ready','*');
+</script>
